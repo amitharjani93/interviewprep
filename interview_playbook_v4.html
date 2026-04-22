@@ -1,0 +1,303 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f7f6f2;--surface:#ffffff;--surface2:#f0efe9;--surface3:#e8e6de;
+  --text:#1a1814;--muted:#4a4740;--dim:#7a7670;--border:#e2e0d6;
+  --c1:#c13a28;--c2:#a87e08;--c3:#1f7a3e;--c4:#1d55b0;--c5:#6b2fd4;--c7:#0779a0;
+  --radius:14px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0f0e17;--surface:#1c1a2e;--surface2:#252340;--surface3:#2e2b50;
+    --text:#f4f2ff;--muted:#c8c4e8;--dim:#9490bc;--border:rgba(255,255,255,0.1);
+    --c1:#ff7a6b;--c2:#ffd93d;--c3:#7dd98a;--c4:#6aabff;--c5:#d49fff;--c7:#5dd4f0;
+  }
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;min-height:100vh;padding:0;}
+.shell{max-width:440px;margin:0 auto;padding:0 14px 56px;}
+.hdr{padding:22px 0 14px;}
+.hdr-eye{font-family:'Syne',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:3px;}
+.hdr-title{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;line-height:1.2;}
+.hdr-title em{color:var(--c2);font-style:normal;}
+.view{display:none;}
+.view.active{display:block;}
+.bc{display:flex;align-items:center;gap:6px;margin-bottom:16px;min-height:18px;flex-wrap:wrap;}
+.bc-btn{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--dim);background:none;border:none;cursor:pointer;padding:0;}
+.bc-active{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--text);}
+.bc-sep{color:var(--dim);font-size:11px;}
+.home-intro{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;}
+.class-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:15px 16px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+.class-card:active{transform:scale(.98);}
+.class-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.class-info{flex:1;min-width:0;}
+.class-num{font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:2px;}
+.class-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:2px;}
+.class-desc{font-size:11.5px;color:var(--muted);line-height:1.4;}
+.class-score{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:5px;display:inline-block;}
+.class-arrow{font-size:18px;color:var(--dim);flex-shrink:0;}
+.add-card{background:transparent;border:1.5px dashed var(--border);border-radius:var(--radius);padding:18px;text-align:center;margin-bottom:10px;}
+.add-card-label{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--dim);margin-bottom:4px;}
+.add-card-sub{font-size:11.5px;color:var(--dim);line-height:1.5;}
+.inner-tabs{display:flex;gap:0;background:var(--surface2);border-radius:11px;padding:3px;border:1.5px solid var(--border);margin-bottom:18px;}
+.itab{flex:1;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;padding:7px 6px;border-radius:8px;border:none;background:transparent;color:var(--dim);cursor:pointer;text-align:center;transition:all .18s;line-height:1.3;}
+.itab.on{background:var(--surface);color:var(--text);}
+@media(prefers-color-scheme:dark){.itab.on{background:var(--surface3);color:var(--text);}}
+.sub-view{display:none;}
+.sub-view.active{display:block;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;}
+.card-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.body-text{font-size:13px;color:var(--muted);line-height:1.7;}
+.tension-box{background:rgba(193,58,40,0.06);border:1px solid rgba(193,58,40,0.2);border-radius:11px;padding:13px 15px;margin-bottom:12px;}
+.tension-lbl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--c1);margin-bottom:5px;}
+.tension-text{font-size:13px;color:var(--muted);line-height:1.7;}
+@media(prefers-color-scheme:dark){
+  .tension-box{background:rgba(255,122,107,0.08);border-color:rgba(255,122,107,0.25);}
+}
+.step{display:flex;gap:12px;align-items:flex-start;margin-bottom:13px;}
+.step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px;}
+.step-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.step-desc{font-size:12px;color:var(--muted);line-height:1.65;}
+.key-row{background:var(--surface2);border-radius:10px;padding:10px 13px;margin-bottom:8px;}
+.key-q{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.key-a{font-size:12px;color:var(--muted);line-height:1.55;}
+.round-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.round-pill{font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--surface2);color:var(--dim);}
+.round-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--dim);}
+.turn{margin-bottom:8px;}
+.turn-who{font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px;}
+.who-tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;}
+.i-tag{background:rgba(7,121,160,0.1);color:var(--c7);}
+.c-tag{background:rgba(31,122,62,0.1);color:var(--c3);}
+@media(prefers-color-scheme:dark){
+  .i-tag{background:rgba(93,212,240,0.15);color:var(--c7);}
+  .c-tag{background:rgba(125,217,138,0.15);color:var(--c3);}
+}
+.bubble{border-radius:11px;padding:12px 14px;font-size:13px;line-height:1.72;color:var(--muted);margin-bottom:2px;}
+.bubble.i{background:var(--surface2);}
+.bubble.c{background:var(--surface);border:1.5px solid var(--border);}
+.annotation{display:flex;gap:8px;align-items:flex-start;margin:4px 0 10px 4px;}
+.ann-icon{font-size:11px;flex-shrink:0;margin-top:2px;}
+.ann-text{font-size:11.5px;color:var(--dim);line-height:1.6;font-style:italic;}
+.round-divider{height:1px;background:var(--border);margin:16px 0;}
+.quote-box{background:var(--surface2);border-left:3px solid var(--c2);border-radius:0 11px 11px 0;padding:11px 14px;font-size:13px;font-style:italic;color:var(--muted);line-height:1.65;margin:8px 0 4px;}
+.mistake{background:rgba(193,58,40,0.05);border:1px solid rgba(193,58,40,0.18);border-radius:10px;padding:11px 13px;margin-bottom:8px;}
+.mistake-lbl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c1);margin-bottom:4px;}
+.fix{background:rgba(31,122,62,0.05);border:1px solid rgba(31,122,62,0.2);border-radius:10px;padding:11px 13px;margin-bottom:8px;}
+.fix-lbl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c3);margin-bottom:4px;}
+@media(prefers-color-scheme:dark){
+  .mistake{background:rgba(255,122,107,0.07);border-color:rgba(255,122,107,0.2);}
+  .fix{background:rgba(125,217,138,0.07);border-color:rgba(125,217,138,0.2);}
+}
+.mf-text{font-size:12.5px;color:var(--muted);line-height:1.6;}
+.divider{height:1px;background:var(--border);margin:10px 0 14px;}
+.score-bar{display:flex;align-items:center;gap:12px;background:var(--surface2);border-radius:11px;padding:14px 16px;margin-top:4px;}
+.score-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;line-height:1;color:var(--c2);}
+.score-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.score-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+.note-box{border:1px solid var(--border);border-radius:10px;padding:11px 14px;margin-bottom:14px;background:var(--surface2);}
+.note-lbl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c2);margin-bottom:4px;}
+.note-text{font-size:12px;color:var(--muted);line-height:1.6;}
+</style>
+
+<div class="shell">
+  <div class="hdr">
+    <div class="hdr-eye">senior ai pm · interview prep</div>
+    <div class="hdr-title">Problem Class <em>Playbook</em></div>
+  </div>
+
+  <div class="bc" id="bc"></div>
+
+  <!-- HOME -->
+  <div class="view active" id="view-home">
+    <p class="home-intro">Each card is a class of interview problem. Tap to open the framework, a realistic model exchange, and common mistakes.</p>
+    <div class="class-card" onclick="openClass(0)">
+      <div class="class-icon" style="background:rgba(7,121,160,0.1);">🗄️</div>
+      <div class="class-info">
+        <div class="class-num">Class 01 · Week 2</div>
+        <div class="class-name">Designing the Knowledge Layer</div>
+        <div class="class-desc">Grounding an agent in enterprise data — accuracy, latency, trust, multi-source conflicts</div>
+        <div class="class-score" style="background:rgba(168,126,8,0.1);color:var(--c2);">Session score: 6.5 / 10</div>
+      </div>
+      <div class="class-arrow">›</div>
+    </div>
+    <div class="add-card">
+      <div class="add-card-label">+ More classes coming</div>
+      <div class="add-card-sub">After each session, ask Claude to add the new problem class — killing a feature, stakeholder conflict, AI metrics, build vs buy, and more.</div>
+    </div>
+  </div>
+
+  <!-- DETAIL -->
+  <div class="view" id="view-detail">
+    <div class="inner-tabs">
+      <button class="itab on" onclick="showSub(0)">Framework</button>
+      <button class="itab" onclick="showSub(1)">Model Answer</button>
+      <button class="itab" onclick="showSub(2)">Mistakes</button>
+    </div>
+
+    <!-- FRAMEWORK -->
+    <div class="sub-view active" id="sub-0">
+      <div class="tension-box">
+        <div class="tension-lbl">core tension</div>
+        <div class="tension-text">Zero tolerance for hallucination sounds right — but real-time, multi-source systems cannot guarantee perfect accuracy. The goal shifts from "eliminate all risk" to "manage risk transparently."</div>
+      </div>
+      <div class="card">
+        <div class="card-label">the framework — 5 steps</div>
+        <div class="step">
+          <div class="step-num" style="background:rgba(7,121,160,0.12);color:var(--c7);">1</div>
+          <div><div class="step-title">Name the impossibility first</div><div class="step-desc">Ask: can I guarantee zero error? Almost always no. Say so. Reframes from "eliminate risk" to "manage it transparently."</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:rgba(29,85,176,0.12);color:var(--c4);">2</div>
+          <div><div class="step-title">Scope the data sources</div><div class="step-desc">What data is needed? What's accessible? Freshness requirement per source? What happens when sources conflict?</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:rgba(107,47,212,0.1);color:var(--c5);">3</div>
+          <div><div class="step-title">Design three confidence modes</div><div class="step-desc">High: sources agree, fresh → answer with certainty. Medium: conflict or stale → answer + flag. Low: can't reconcile → say "I'm not sure."</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:rgba(168,126,8,0.1);color:var(--c2);">4</div>
+          <div><div class="step-title">Make uncertainty visible</div><div class="step-desc">Sources used, freshness, confidence level, what could be wrong. This isn't extra info — it's what makes trust possible.</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:rgba(31,122,62,0.1);color:var(--c3);">5</div>
+          <div><div class="step-title">Test against the user's real context</div><div class="step-desc">Where is the answer being used? In a live meeting? Async research? Acceptable for async is not acceptable mid-call.</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">5 questions to always ask</div>
+        <div class="key-row"><div class="key-q">Scope</div><div class="key-a">What subset of data can the user query? Own data only? Company-wide? Historical?</div></div>
+        <div class="key-row"><div class="key-q">Freshness</div><div class="key-a">How stale is too stale for this use case — minutes, hours, or days?</div></div>
+        <div class="key-row"><div class="key-q">Conflict resolution</div><div class="key-a">When sources disagree, what's the tiebreaker — timestamp, reliability, or user judgment?</div></div>
+        <div class="key-row"><div class="key-q">Confidence expression</div><div class="key-a">How do you communicate uncertainty without breaking the user's flow?</div></div>
+        <div class="key-row"><div class="key-q">Fallback</div><div class="key-a">What does the agent do when it genuinely cannot answer confidently?</div></div>
+      </div>
+    </div>
+
+    <!-- MODEL ANSWER -->
+    <div class="sub-view" id="sub-1">
+      <div class="note-box">
+        <div class="note-lbl">how to read this</div>
+        <div class="note-text">Realistic back-and-forth — candidate asks clarifying questions, states assumptions, builds incrementally. Annotations in italics explain why each move is made.</div>
+      </div>
+
+      <div class="round-header"><span class="round-pill">Round 1</span><span class="round-title">Opening question</span></div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag i-tag">Interviewer</span></div>
+        <div class="bubble i">You're building a Copilot feature for a sales rep querying their CRM in real time. The LLM sometimes hallucinates or gives outdated info. How do you think about the trade-off between accuracy, latency, and user trust?</div>
+      </div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag c-tag">Candidate</span></div>
+        <div class="bubble c">Before I get into trade-offs, can I clarify two things about the user and context?<br><br>First — is the rep doing async research before a call, or are they in an active meeting with a customer right now?<br><br>Second — scope of data: just their own deals, or company-wide including other reps and historical records?</div>
+      </div>
+      <div class="annotation"><span class="ann-icon">💡</span><span class="ann-text">Clarify user context before answering. The cost of being wrong — and therefore the accuracy bar — is completely different for async vs a live call.</span></div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag i-tag">Interviewer</span></div>
+        <div class="bubble i">They're on a live call. And they can only query their own deals.</div>
+      </div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag c-tag">Candidate</span></div>
+        <div class="bubble c">That changes everything. On a live call, a wrong data point in front of the customer is immediately costly — broken trust, bad negotiation. So accuracy wins over latency. A two-second wait for a right answer beats an instant wrong one.<br><br>On data: ten active deal records is small enough that a real-time REST API call at query time is cleaner and cheaper than a RAG pipeline. No stale index. API returns current state, LLM synthesises the answer.<br><br>One thing I'll name upfront: I'm not going to promise zero hallucination. That's not achievable in any live system. What I'll design for is transparent, managed uncertainty — so when something is wrong, the user can detect and correct it fast.</div>
+      </div>
+      <div class="annotation"><span class="ann-icon">💡</span><span class="ann-text">State the impossibility before the interviewer challenges it. Shows you've already thought past the naive answer.</span></div>
+
+      <div class="round-divider"></div>
+
+      <div class="round-header"><span class="round-pill">Round 2</span><span class="round-title">Multi-source conflict</span></div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag i-tag">Interviewer</span></div>
+        <div class="bubble i">What if the query needs both CRM data and email history — like "is this deal actually on track?"</div>
+      </div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag c-tag">Candidate</span></div>
+        <div class="bubble c">One assumption before I answer: are emails linked to the deal record in the CRM, or is that a separate system call?<br><br>If linked — one API call gets both. If separate — I need to decide: parallel calls, or gate the email call behind CRM results? The answer changes the latency profile.</div>
+      </div>
+      <div class="annotation"><span class="ann-icon">💡</span><span class="ann-text">Always state the assumption before proceeding. Signals architecture thinking — you're thinking about what changes, not just the happy path.</span></div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag i-tag">Interviewer</span></div>
+        <div class="bubble i">Assume they're linked — one API call returns both.</div>
+      </div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag c-tag">Candidate</span></div>
+        <div class="bubble c">Good. One call, CRM and comms together, LLM synthesises across both.<br><br>Hard case: sources conflict. CRM says "closed won," latest email says negotiations still ongoing.<br><br>Timestamp is my first tiebreaker — most recent source wins. Email is more recent, so I treat the deal as open.<br><br>But I don't hide the conflict. The agent says: "Your CRM shows closed won, but your most recent email suggests negotiations are still open. I've used the email as the latest signal — please verify before acting on this."<br><br>One line. The rep reads it in a second. I don't ask them a question mid-call — I make the call and give them a clear path to override if I'm wrong.</div>
+      </div>
+      <div class="annotation"><span class="ann-icon">💡</span><span class="ann-text">Make the call, flag it in one line, let the user override. Don't ask a question mid-meeting — that breaks their flow.</span></div>
+
+      <div class="round-divider"></div>
+
+      <div class="round-header"><span class="round-pill">Round 3</span><span class="round-title">Challenging "zero tolerance"</span></div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag i-tag">Interviewer</span></div>
+        <div class="bubble i">You said "zero tolerance for hallucination" but you just described picking a winner based on timestamp. Those aren't the same thing. How do you reconcile that?</div>
+      </div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag c-tag">Candidate</span></div>
+        <div class="bubble c">You're right — I should have drawn that distinction earlier.<br><br>"Zero tolerance for hallucination" means the agent never invents facts that don't exist in any source. It does not mean I can guarantee freshness or resolve every conflict perfectly — those are unavoidable in any live multi-source system.<br><br>The real design goal isn't zero error. It's: when an error occurs, the user can detect it, trace it, and correct it quickly. That means showing which sources I used and when they were last updated, surfacing a confidence level, and saying "I'm not sure" rather than guessing when confidence is genuinely low.<br><br>That's what trust means here — not that the AI is always right, but that the user always knows how much to rely on what they're getting.</div>
+      </div>
+      <div class="annotation"><span class="ann-icon">💡</span><span class="ann-text">When caught in a contradiction, own it and reframe with precision. Don't defend the earlier framing — upgrade it.</span></div>
+      <div class="quote-box">"Trust doesn't mean the AI is always right. It means the user always knows how much to rely on the answer — and can correct it fast when it's wrong."</div>
+
+      <div class="round-divider"></div>
+
+      <div class="round-header"><span class="round-pill">Round 4</span><span class="round-title">Pushing on UX</span></div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag i-tag">Interviewer</span></div>
+        <div class="bubble i">You keep saying "surface the conflict to the user." The rep is in a meeting — they don't have time to read caveats. What does this actually look like?</div>
+      </div>
+      <div class="turn">
+        <div class="turn-who"><span class="who-tag c-tag">Candidate</span></div>
+        <div class="bubble c">Fair — the UX can't be a wall of disclaimers.<br><br>Primary answer: confident and direct. "This deal is still in negotiation — last updated in your email two hours ago." That's what they say out loud.<br><br>The caveat is one inline line: "Note: CRM shows closed won. Email is more recent — I've used that." The rep reads it in a second, knows to confirm with their customer after the call.<br><br>The principle: answer is primary, caveat is a safety signal — not a disclaimer page. If we're showing more than one sentence of uncertainty framing, we've broken the UX.</div>
+      </div>
+      <div class="annotation"><span class="ann-icon">💡</span><span class="ann-text">When pushed on UX, give the actual output — what the user sees. Don't stay at the principle level. Show you've thought it to the interface.</span></div>
+    </div>
+
+    <!-- MISTAKES -->
+    <div class="sub-view" id="sub-2">
+      <div class="mistake"><div class="mistake-lbl">mistake 1</div><div class="mf-text">Stating "zero tolerance for hallucination" without distinguishing it from stale data or source conflicts. Collapses under the first follow-up.</div></div>
+      <div class="fix"><div class="fix-lbl">fix</div><div class="mf-text">Name the distinction early: "Zero tolerance means no invented facts — it doesn't mean I can guarantee freshness across live sources."</div></div>
+      <div class="divider"></div>
+      <div class="mistake"><div class="mistake-lbl">mistake 2</div><div class="mf-text">Jumping to architecture before establishing user context. The right architecture follows from who the user is and where they're using the answer.</div></div>
+      <div class="fix"><div class="fix-lbl">fix</div><div class="mf-text">Always ask: who is the user, what are they doing, where, and what breaks if you're wrong. Architecture is a consequence of those answers.</div></div>
+      <div class="divider"></div>
+      <div class="mistake"><div class="mistake-lbl">mistake 3</div><div class="mf-text">Asking the user to verify after the call. They won't. And it doesn't solve the problem — they need the right answer now.</div></div>
+      <div class="fix"><div class="fix-lbl">fix</div><div class="mf-text">Agent makes a call, states reasoning in one line, lets the user override inline. Don't defer to a future action that won't happen.</div></div>
+      <div class="divider"></div>
+      <div class="mistake"><div class="mistake-lbl">mistake 4</div><div class="mf-text">Saying "surface the conflict" without specifying what that looks like in the UI. Too abstract — doesn't show you've thought it to the interface level.</div></div>
+      <div class="fix"><div class="fix-lbl">fix</div><div class="mf-text">Get concrete: primary answer is direct and confident, caveat is one inline sentence. Answer is primary. Caveat is a safety signal, not a disclaimer page.</div></div>
+      <div class="divider"></div>
+      <div class="score-bar">
+        <div class="score-num">6.5</div>
+        <div>
+          <div class="score-title">Session Score · Class 01</div>
+          <div class="score-desc">Good instincts on scoping and real-time data. Gaps: interrogate constraints early, express uncertainty proactively, lead with user context before architecture.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const classes=[{name:"Designing the Knowledge Layer"}];
+function openClass(i){
+  document.getElementById('view-home').classList.remove('active');
+  document.getElementById('view-detail').classList.add('active');
+  renderBC(i);showSub(0);
+  document.querySelectorAll('.itab').forEach((t,j)=>t.classList.toggle('on',j===0));
+}
+function goHome(){
+  document.getElementById('view-detail').classList.remove('active');
+  document.getElementById('view-home').classList.add('active');
+  renderBC(-1);
+}
+function renderBC(i){
+  const bc=document.getElementById('bc');
+  if(i<0){bc.innerHTML='<span class="bc-active">All Classes</span>';return;}
+  bc.innerHTML=`<button class="bc-btn" onclick="goHome()">All Classes</button><span class="bc-sep">›</span><span class="bc-active">${classes[i].name}</span>`;
+}
+function showSub(i){
+  document.querySelectorAll('.sub-view').forEach((s,j)=>s.classList.toggle('active',j===i));
+  document.querySelectorAll('.itab').forEach((t,j)=>t.classList.toggle('on',j===i));
+}
+renderBC(-1);
+</script>
